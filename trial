@@ -52,6 +52,6 @@ pipeline {
           sh 'sleep 180'
           sh 'sudo -i kubectl get all'
         }
- }
-}
+     }
+  }
 }
