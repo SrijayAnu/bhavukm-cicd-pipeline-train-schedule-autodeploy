@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
     environment {
@@ -48,6 +49,7 @@ pipeline {
           sh 'sudo -i kubectl get cs'
           sh 'sudo -i kubectl apply -f /tmp/workspace/Seetha/train1.yml'
           sh 'sudo -i kubectl apply -f /tmp/workspace/Seetha/train-shedule.yml'
+          sh 'sleep 180'
           sh 'sudo -i kubectl get all'
         }
  }
