@@ -1,0 +1,33 @@
+pipeline {
+    agent any 
+    environment {
+        name = "srijayanu/train"
+        max = 50
+        random_num = "${Math.abs(new Random().nextInt(max+1))}"
+        result="${name}${random_num}"
+         }
+       stages {
+            stage('Git Checkout') {
+            steps {
+             script {
+                  checkout scmGit(branches: [[name: '*/dependabot/npm_and_yarn/npm-6.14.6']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/SrijayAnu/bhavukm-cicd-pipeline-train-schedule-autodeploy.git']])
+                 }
+                 }
+                 }
+        stage('Build')
+        {
+            steps {
+                sh 'docker build -t $result .'
+            }
+        }
+        stage('docker build and push')
+        {
+           steps {
+              withCredentials([string(credentialsId: 'dockerloginpwd', variable: 'dockerlogin')]) { 
+             sh 'echo ${dockerlogin} | docker login -u srijayanu --password-stdin'
+             sh 'docker push $result '
+                }
+        }
+}
+}
+ }
