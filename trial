@@ -1,29 +1,40 @@
 pipeline {
     agent any
     environment {
-        //be sure to replace "willbla" with your own Docker Hub username
-        DOCKER_IMAGE_NAME = "willbla/train-schedule"
+        name = "srijayanu/train"
+        max = 50
+        random_num = "${Math.abs(new Random().nextInt(max+1))}"
+        result="${name}${random_num}"
     }
     stages {
-        stage('Build') {
+         stage('Git Checkout') {
+            steps {
+             script {
+                  checkout scmGit(branches: [[name: '*/dependabot/npm_and_yarn/npm-6.14.6']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/SrijayAnu/bhavukm-cicd-pipeline-train-schedule-autodeploy.git']])
+                 }
+                 }
+                 }
+        stage('Gradle Build') {
             steps {
                 echo 'Running build automation'
                 sh './gradlew build --info --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage('Build Docker Image') {
-            when {
-                branch 'master'
-            }
+        stage('docker image')
+        {
             steps {
-                script {
-                    app = docker.build(DOCKER_IMAGE_NAME)
-                    app.inside {
-                        sh 'echo Hello, World!'
-                    }
-                }
+                sh 'docker build -t $result .'
             }
+        }
+        stage('docker login and push')
+        {
+           steps {
+              withCredentials([string(credentialsId: 'dockerloginpwd', variable: 'dockerlogin')]) { 
+             sh 'echo ${dockerlogin} | docker login -u srijayanu --password-stdin'
+             sh 'docker push $result '
+                }
         }
 }
 }
+ }
