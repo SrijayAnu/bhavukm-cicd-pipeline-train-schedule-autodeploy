@@ -11,6 +11,7 @@ pipeline {
             steps {
              script {
                   checkout scmGit(branches: [[name: '*/dependabot/npm_and_yarn/npm-6.14.6']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/SrijayAnu/bhavukm-cicd-pipeline-train-schedule-autodeploy.git']])
+                  stash (name: 'mystash', includes: 'train1.yml', 'train-shedule.yml')
                  }
                  }
                  }
@@ -42,6 +43,7 @@ pipeline {
             label "worker" 
             }
          steps {
+          unstash 'mystash'
           sh 'sudo -i kubectl get nodes '
           sh 'sudo -i kubectl get cs'
         }
