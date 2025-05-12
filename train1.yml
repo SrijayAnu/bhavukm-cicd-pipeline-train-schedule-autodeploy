@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: train-schedule
-        image: srijayanu/train7
+        image: $result
         ports:
         - containerPort: 8080
         livenessProbe:
