@@ -54,7 +54,7 @@ pipeline {
           sudo -i kubectl apply -f /tmp/workspace/Seetha/train-shedule.yml
           sleep 180
           sudo -i kubectl get all
-           '''
+          '''
         }
      }
   }
