@@ -47,6 +47,8 @@ pipeline {
           unstash 'mystash'
           sh 'sudo -i kubectl get nodes '
           sh 'sudo -i kubectl get cs'
+          sh 'sed "s/\$image_name/$image_name/" train1.yaml'
+          sh 'sed "s/\$image_name/$image_name/" train-shedule.yaml'
           sh 'sudo -i kubectl apply -f /tmp/workspace/Seetha/train1.yml'
           sh 'sudo -i kubectl apply -f /tmp/workspace/Seetha/train-shedule.yml'
           sh 'sleep 180'
