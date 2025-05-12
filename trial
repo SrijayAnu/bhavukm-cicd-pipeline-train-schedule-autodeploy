@@ -36,5 +36,15 @@ pipeline {
                 }
         }
     }
+        stage ('Deployment')
+        {
+        agent { 
+            label "worker" 
+            }
+         steps {
+          sh 'sudo -i kubectl get nodes '
+          sh 'sudo -i kubectl get cs'
+        }
  }
+}
 }
