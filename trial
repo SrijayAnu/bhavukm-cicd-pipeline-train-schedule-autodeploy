@@ -5,7 +5,7 @@ pipeline {
         name = "srijayanu/train"
         max = 50
         random_num = "${Math.abs(new Random().nextInt(max+1))}"
-        result="${name}${random_num}"
+        image_name = "${name}${random_num}"
     }
     stages {
          stage("Git Checkout") {
@@ -26,7 +26,7 @@ pipeline {
         stage("docker image")
         {
             steps {
-                sh 'docker build -t $result .'
+                sh 'docker build -t $image_name .'
             }
         }
         stage("docker login and push")
@@ -34,7 +34,7 @@ pipeline {
            steps {
               withCredentials([string(credentialsId: 'dockerloginpwd', variable: 'dockerlogin')]) { 
              sh 'echo ${dockerlogin} | docker login -u srijayanu --password-stdin'
-             sh 'docker push $result '
+             sh 'docker push $image_name '
                 }
         }
     }
