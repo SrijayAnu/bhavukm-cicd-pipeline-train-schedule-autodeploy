@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: train-schedule
-        image: ${result}
+        image: $image_name
         ports:
         - containerPort: 8080
         livenessProbe:
