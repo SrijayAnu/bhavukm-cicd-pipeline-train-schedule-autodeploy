@@ -13,8 +13,8 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/dependabot/npm_and_yarn/npm-6.14.6']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/SrijayAnu/bhavukm-cicd-pipeline-train-schedule-autodeploy.git']])
                  stash includes: 'train1.yml, train-shedule.yml', name: 'mystash' 
                  }
-                 }
-                 }
+             }
+         }
         stage("Gradle Build") {
             steps {
                 echo 'Running build automation'
