@@ -38,10 +38,10 @@ pipeline {
             }
         }
         stage ("Deployment")
-           {
+        {
         agent { 
             label "worker" 
-            }
+             }
          steps {
           unstash 'mystash'
           sh '''
