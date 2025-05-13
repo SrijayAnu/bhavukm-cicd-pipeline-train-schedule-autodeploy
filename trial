@@ -38,7 +38,7 @@ pipeline {
             }
         }
         stage ("Deployment")
-        {
+           {
         agent { 
             label "worker" 
             }
