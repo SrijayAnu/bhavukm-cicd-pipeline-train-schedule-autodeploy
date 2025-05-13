@@ -49,8 +49,8 @@ pipeline {
           sudo -i kubectl get cs
           awk '{gsub(/image_name/, ENVIRON["image_name"])}1' train1.yml > temp_file.yml && mv temp_file.yml train1.yml
           awk '{gsub(/image_name/, ENVIRON["image_name"])}1' train-shedule.yml > temp_file.yml && mv temp_file.yml train-shedule.yml
-          sudo -i kubectl apply -f /tmp/workspace/Seetha/train1.yml
-          sudo -i kubectl apply -f /tmp/workspace/Seetha/train-shedule.yml
+          sudo -i kubectl apply -f /tmp/workspace/pipeline1/train1.yml
+          sudo -i kubectl apply -f /tmp/workspace/pipeline1/train-shedule.yml
           sleep 180
           sudo -i kubectl get all
           '''
